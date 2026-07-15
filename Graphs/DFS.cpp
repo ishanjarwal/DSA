@@ -5,12 +5,15 @@
 #include <vector>
 using namespace std;
 
-void dfsUtil(vector<vector<int>> &adj, vector<bool> &visited, vector<int> &res,
-             int src) {
-  stack<int> s;
+vector<int> dfs(vector<vector<int>> &adj) {
+  int V = adj.size();
 
-  s.push(src);
-  visited[src] = true;
+  stack<int> s;
+  vector<int> res;
+  vector<bool> visited(V, false);
+
+  s.push(0);
+  visited[0] = true;
 
   while (!s.empty()) {
     int top = s.top();
@@ -25,17 +28,6 @@ void dfsUtil(vector<vector<int>> &adj, vector<bool> &visited, vector<int> &res,
       }
     }
   }
-}
-
-vector<int> dfs(vector<vector<int>> &adj) {
-  int V = adj.size();
-  vector<int> res;
-  vector<bool> visited(V, false);
-
-  for (int i = 0; i < V; i++) {
-    if (!visited[i])
-      dfsUtil(adj, visited, res, i);
-  }
 
   return res;
 }
@@ -46,7 +38,7 @@ void addEdge(vector<vector<int>> &adj, int u, int v) {
 }
 
 int main() {
-  int V = 7;
+  int V = 5;
   vector<vector<int>> adj(V);
 
   // creating adjacency list
@@ -55,7 +47,6 @@ int main() {
   addEdge(adj, 2, 0);
   addEdge(adj, 2, 3);
   addEdge(adj, 2, 4);
-  addEdge(adj, 5, 6);
 
   // Perform DFS starting from the source vertex 0
   vector<int> res = dfs(adj);

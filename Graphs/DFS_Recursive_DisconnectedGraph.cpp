@@ -1,30 +1,22 @@
-// DFS for a connected undirected graph;
+// DFS for a disconnected undirected graph;
 
 #include <iostream>
-#include <stack>
 #include <vector>
 using namespace std;
 
-void dfsUtil(vector<vector<int>> &adj, vector<bool> &visited, vector<int> &res,
-             int src) {
-  stack<int> s;
+void dfsRec(vector<vector<int>> &adj, vector<bool> &visited, int src,
+            vector<int> &res) {
 
-  s.push(src);
-  visited[src] = true;
+  visited[src] = 1;
+  res.push_back(src);
 
-  while (!s.empty()) {
-    int top = s.top();
-    s.pop();
-
-    res.push_back(top);
-
-    for (int x : adj[top]) {
-      if (!visited[x]) {
-        visited[x] = true;
-        s.push(x);
-      }
+  for (int x : adj[src]) {
+    if (!visited[x]) {
+      dfsRec(adj, visited, x, res);
     }
   }
+
+  return;
 }
 
 vector<int> dfs(vector<vector<int>> &adj) {
@@ -32,9 +24,9 @@ vector<int> dfs(vector<vector<int>> &adj) {
   vector<int> res;
   vector<bool> visited(V, false);
 
-  for (int i = 0; i < V; i++) {
+  for (int i = 0; i < adj.size(); i++) {
     if (!visited[i])
-      dfsUtil(adj, visited, res, i);
+      dfsRec(adj, visited, i, res);
   }
 
   return res;
@@ -60,6 +52,6 @@ int main() {
   // Perform DFS starting from the source vertex 0
   vector<int> res = dfs(adj);
 
-  for (int x : res)
-    cout << x << " ";
+  for (int i = 0; i < V; i++)
+    cout << res[i] << " ";
 }
