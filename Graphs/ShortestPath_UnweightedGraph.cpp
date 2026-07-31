@@ -44,7 +44,7 @@ vector<int> shortestPath(const vector<vector<int>> &adj, int V, int src,
 
 void addEdge(vector<vector<int>> &adj, int u, int v) {
   adj[u - 1].push_back(v - 1);
-  adj[v - 1].push_back(u - 1);
+  adj[v - 1].push_back(u - 1); // comment for directed graph
 }
 
 int main() {
@@ -57,19 +57,35 @@ int main() {
     cin >> x >> y;
     addEdge(adj, x, y);
   }
-  //   8
-  //   9
-  //   1 2
-  //   1 3
-  //   1 4
-  //   2 5
-  //   5 8
-  //   3 8
-  //   4 6
-  //   6 7
-  //   7 8
-  vector<int> path = shortestPath(adj, V, 0, 7);
+
+  vector<int> path = shortestPath(adj, V, 1, 5);
   for (int x : path) {
     cout << x + 1 << " ";
   }
 }
+
+// Undirected input
+//   8
+//   9
+//   1 2
+//   1 3
+//   1 4
+//   2 5
+//   5 8
+//   3 8
+//   4 6
+//   6 7
+//   7 8
+
+// Directed Input
+// 6
+// 9
+// 1 2
+// 1 3
+// 2 4
+// 2 3
+// 3 4
+// 3 5
+// 3 6
+// 4 5
+// 5 6
